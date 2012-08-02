@@ -1,0 +1,35 @@
+
+DEVICECONTROLSERVICE
+
+This is a first crude attempt to integrate AGDeviceControl with the
+Access Grid Toolkit version 2.3. 
+
+AGTk has two types of application, node-service and shared-app. Node
+services is a fairly simple launcher system capable of firing up an
+external app (such as vic or rat) whenever a new Venue is entered.
+Shared Apps is more about collaboration between AG participants.  A
+Shared App similarly fires up an external app but also provides an
+event channel and a common data store through which different
+instances of the Shared App can communicate.  Unfortunately the Shared
+App isn't run automagically when entering a Venue.  Instead it must
+(i) be launched manually and (ii) must exist as a separate instance in
+each Venue.
+
+We want a node service plus the event channel and data store of the
+Shared App.  
+
+Node Services are packaged as a zip archive.  To install the service,
+we use the agpm.py (AG Package Manager) tool.  This simply copies the
+archive to the correct directory
+(/Applications/AccessGridToolkit.app/Contents/Resources/NodeServices
+on MacOSX, for example).
+
+- DeviceControlService.py is run each time we switch Venues
+
+- Our service is going to have the following functionality
+    - maintain state about current Venue
+    - keep track of other instances running on remote nodes in the
+      same Venue
+    - be a raw AGDeviceControl-like GUI client
+    - be a RoomServer configured to aggregate several DeviceServers
+

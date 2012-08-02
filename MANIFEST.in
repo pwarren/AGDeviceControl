@@ -1,0 +1,29 @@
+include README
+include setup.py
+include agdevicecontrol/__init__.py
+
+include agdevicecontrol/clients/__init__.py
+include agdevicecontrol/clients/connector.py
+
+include agdevicecontrol/gui/__init__.py
+include agdevicecontrol/gui/*.py
+include agdevicecontrol/gui/images/*.png
+
+include agdevicecontrol/common/__init__.py
+include agdevicecontrol/common/*.py
+
+include agdevicecontrol/server/__init__.py
+include agdevicecontrol/server/*.py
+
+include agdevicecontrol/AGTk/*.py
+include DeviceControlService.zip
+
+include agdevicecontrol/thirdparty/__init__.py
+include agdevicecontrol/thirdparty/__bootstrap__.py
+
+graft agdevicecontrol/thirdparty/site-packages
+
+include agdevicecontrol/bin/server.py
+include agdevicecontrol/bin/*-test.py
+
+prune */.svn

@@ -1,0 +1,537 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [de]C-CCK-MCD QXW0320g  (Win95; I) [Netscape]">
+   <title> Sequential Multiple Value Dictionary </title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000FF">
+
+<center>
+<h2>
+Sequential Multiple Value Dictionary</h2></center>
+
+<h2>
+Description:</h2>
+The Python dictionary accesses its keys by hash values for performance
+reasons. As a result there is no specified order of its elements. Consequently
+there are no sort or slicing methods on ordinary dictionaries.
+<p>A little German-English dictionary:
+<p><tt>dict={"Abend" : "evening",</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "aber" : "but",</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Bild" : "picture",</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "deshalb" : "therefore",</tt>
+<br><tt>&nbsp; "Erkennung" : "recognition",</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Fl&ouml;te" : "flute",</tt>
+<br><tt>&nbsp;&nbsp; "gewinnen" : "gain" }</tt>
+<p><tt>>>> dict</tt>
+<br><tt>{'gewinnen': 'gain', 'deshalb': 'therefore', 'Abend': 'evening',
+'aber': 'but', 'Bild': 'picture', 'Erkennung': 'recognition', 'Fl\366te':
+'flute' }</tt>
+<p>Although the dictionary was created with items in order there is no
+order and no reliable sequence in the dictionary's representation.
+<br>The sequential multiple value dictionary incorporates a list holding
+the dictionary's keys and the dictionary with multiple values in a UserList.
+<p>An empty sequential multiple value dictionary (mseqdict):
+<br><tt>>>> seqdict.mseqdict()</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>[], # list holds the keys in sequence</tt>
+<br><tt>{}) # dictionary holds the keys and values</tt>
+<p>A mseqdict instance of dict is created:
+<br><tt>>>> s = seqdict.mseqdict(dict)</tt>
+<br><tt>>>> s</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te'],</tt>
+<br><tt>{'gewinnen': ['gain'], 'deshalb': ['therefore'], 'Abend': ['evening'],
+'aber': ['but'], 'Bild': ['picture'], 'Erkennung': ['recognition'], 'Fl\366te':
+['flute']})</tt>
+<p>After sorting:
+<br><tt>>>> s.sort(lambda x,y:cmp(string.lower(x),string.lower(y)))</tt>
+<br><tt>>>> s</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['Abend', 'aber', 'Bild', 'deshalb', 'Erkennung', 'Fl\366te', 'gewinnen'],</tt>
+<br><tt>{'gewinnen': ['gain'], 'deshalb': ['therefore'], 'Abend': ['evening'],
+'aber': ['but'], 'Bild': ['picture'], 'Erkennung': ['recognition'], 'Fl\366te':
+['flute']})</tt>
+<p>Voila, here it is sorted again!
+<br><tt>>>> for key,value in s.items():</tt>
+<br><tt>...&nbsp;&nbsp; print '%11s : %s'%(key,value[0])</tt>
+<br><tt>...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Abend : evening</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; aber : but</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bild : picture</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; deshalb : therefore</tt>
+<br><tt>&nbsp; Erkennung : recognition</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fl&ouml;te : flute</tt>
+<br><tt>&nbsp;&nbsp; gewinnen : gain</tt>
+<p>Of course, keys and items also appear in sorted sequence:
+<br><tt>>>> s.keys()</tt>
+<br><tt>['Abend', 'aber', 'Bild', 'deshalb', 'Erkennung', 'Fl\366te', 'gewinnen']</tt>
+<br><tt>>>> s.values()</tt>
+<br><tt>[['evening'], ['but'], ['picture'], ['therefore'], ['recognition'],
+['flute'], ['gain']]</tt>
+<br><tt>>>> s.items()</tt>
+<br><tt>[('Abend', ['evening']), ('aber', ['but']), ('Bild', ['picture']),
+('deshalb', ['therefore']), ('Erkennung', ['recognition']), ('Fl\366te',
+['flute']), ('gewinnen', ['gain'])]</tt>
+<h2>
+<font size=+1>A short Tutorial:</font></h2>
+<b>slicing by index:</b>
+<br><tt>>>> s[2:5]</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['Bild', 'deshalb', 'Erkennung'],</tt>
+<br><tt>{'Bild': ['picture'], 'Erkennung': ['recognition'], 'deshalb':
+['therefore']})</tt>
+<p><b>insert:</b>
+<br><tt><font size=+1>>>> d=seqdict.mseqdict({"Fliege":"fly","Hand":"hand"})</font></tt>
+<br><tt>>>> s.insert(3,d)</tt>
+<br><tt>>>> s</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['Abend', 'aber', 'Bild', 'Hand', 'Fliege', 'deshalb', 'Erkennung',
+'Fl\366te', 'gewinnen'],</tt>
+<br><tt>{'Hand': ['hand'], 'Fliege': ['fly'], 'gewinnen': ['gain'], 'deshalb':
+['therefore'], 'Abend': ['evening'], 'aber': ['but'], 'Bild': ['picture'],
+'Erkennung': ['recognition'], 'Fl\366te': ['flute']})</tt>
+<p><b>append:</b>
+<br><tt>>>> x=seqdict.mseqdict(dict)</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te']</tt><tt></tt>
+<p><tt>>>> x.append('Zug','train')</tt>
+<br><tt>>>> x.append('Bild','illustration')</tt>
+<br><tt>>>> x</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te',
+'Zug'],</tt>
+<br><tt>{'gewinnen': ['gain'], 'deshalb': ['therefore'], 'Zug': ['train'],
+'Abend': ['evening'], 'aber': ['but'], 'Bild': ['picture', 'illustration'],
+'Erkennung': ['recognition'], 'Fl\366te': ['flute']})</tt>
+<p><b>check:</b>
+<br>Checks the integrity of the dictionary. This method is suitable for
+debugging reasons.
+<br><tt>>>> x.check()</tt>
+<br><tt>1 # ok</tt><tt></tt>
+<p><tt>>>> x.list[0]='spam' # don't even think to modify internals!</tt>
+<br><tt>>>> x.check()</tt>
+<br><tt>0 # list and dict are of same length, but keys don't match</tt><tt></tt>
+<p><tt>>>> del x.list[1] # don't even think to modify internals!</tt>
+<br><tt>>>> x.check()</tt>
+<br><tt>-1 # list and dict are not of same length</tt>
+<p><b>clear:</b>
+<br><tt>>>> x.clear()</tt>
+<br><tt>>>> x</tt>
+<p><tt>mseqdict(</tt>
+<br><tt>[],</tt>
+<br><tt>{})</tt>
+<p><b>copy:</b>
+<br><tt>>>> s1=s.copy() # copy of the dictionary</tt>
+<br><tt>>>> s2=s[:] # same as s.copy</tt>
+<br><tt>>>> s3=s # copies the reference</tt>
+<br><tt>>>> s==s1==s2==s3</tt>
+<br><tt>1</tt>
+<p><tt>>>> s is s1 or s is s2 or s1 is s2</tt>
+<br><tt>0</tt>
+<p><tt>>>> s is s3</tt>
+<br><tt>1</tt>
+<p><b>count:</b>
+<br>Counts the number of appearance of the value within the dictionary's
+values
+<br><tt>>>> u=seqdict.mseqdict({1:2, 2:3, 3:4, 4:5, 5:3})</tt>
+<br><tt>>>> u.count(2)</tt>
+<br><tt>1</tt>
+<p><tt>>>> u.count(3)</tt>
+<br><tt>2</tt>
+<p><tt>>>> u[1] = 3</tt>
+<br><tt>>>> u.count(3)</tt>
+<br><tt>3</tt>
+<p><b>del:</b>
+<br><tt>>>> x=seqdict.mseqdict(dict)</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te']</tt>
+<p><tt>>>> del x[1:3]</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'aber', 'Bild', 'Erkennung', 'Fl\366te']</tt><tt></tt>
+<p><tt>>>> del x['Erkennung']</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'aber', 'Bild', 'Fl\366te']</tt>
+<p><tt>>>> x['Bild']='painting'</tt>
+<br><tt>>>> x['Bild']</tt>
+<br><tt>['picture','painting']</tt>
+<p><tt>>>> del x['Bild'][0]</tt>
+<br><tt>>>> x['Bild']</tt>
+<br><tt>['painting']</tt>
+<p><tt>>>> del x['Bild'][0]</tt>
+<br><tt>>>> x.has_key('Bild')</tt>
+<br><tt>0</tt>
+<p><tt>>>> del x</tt>
+<br><tt>>>> x</tt>
+<br><tt>Traceback (innermost last):</tt>
+<br><tt>File "&lt;stdin>", line 1, in ?</tt>
+<br><tt>NameError: x</tt>
+<p><b>extend:</b>
+<br><b>update:</b>
+<br>Unless the keys are member of s they will be appended, otherwise updated.
+<br><tt>>>> s.keys()</tt>
+<br><tt>['Abend', 'Bild', 'Erkennung', 'Hand', 'Fliege', 'Fl\366te', 'aber',
+'deshalb', 'gewinnen']</tt>
+<br><tt>>>> s.values()</tt>
+<br><tt>[['evening'], ['picture'], ['recognition'], ['hand'], ['fly'],
+['flute'], ['but'], ['therefore'],['gain']]</tt>
+<p><tt>>>> d["Melone"]="melon"</tt>
+<br><tt>>>> d["Bild"]="painting"</tt>
+<br><tt>>>> d.keys()</tt>
+<br><tt>['Hand','Fliege','Melone']</tt>
+<p><tt>>>> s.extend(d) # same as s.update(d)</tt>
+<br><tt>>>> s.keys()</tt>
+<br><tt>['Abend', 'Bild', 'Erkennung', 'Hand', 'Fliege', 'Fl\366te', 'aber',
+'deshalb', 'gewinnen','Melone']</tt>
+<br><tt>>>> s.values()</tt>
+<br><tt>[['evening'], ['picture', 'painting'], ['recognition'], ['hand'],
+['fly'], ['flute'], ['but'], ['therefore'],['gain'], ['melon']]</tt>
+<p><b>filter:</b>
+<br>The filter function considers if the second parameter is:
+<br>0: only keys
+<br>1: key and values
+<br>2: key and value
+<p><tt>>>> x=seqdict.mseqdict(dict)</tt>
+<br><tt>>>> x['Bild'] = 'painting'</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te']</tt>
+<p><tt>>>> import re</tt>
+<br><tt>>>> x.filter(re.compile('a',re.I).match) # all keys beginning with
+a or A</tt>
+<br><tt>seqdict(</tt>
+<br><tt>['Abend', 'aber'],</tt>
+<br><tt>{'Abend': ['evening'], 'aber': ['but']})</tt>
+<p><tt>>>> def filter_a(key,values): #filters values with 'a' in value</tt>
+<br><tt>... for value in values:</tt>
+<br><tt>...&nbsp;&nbsp; for i in value:</tt>
+<br><tt>...&nbsp;&nbsp;&nbsp;&nbsp; if i == 'a':return 1</tt>
+<br><tt>...&nbsp;&nbsp; return 0</tt>
+<p><tt>>>> x.filter(filter_a,1) #filters key,values</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['gewinnen', 'Bild'],</tt>
+<br><tt>{'Bild': ['picture', 'painting'], 'gewinnen': ['gain']})</tt>
+<p><tt>>>> x.filter(filter_a,2) #filters key,value</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['gewinnen', 'Bild'],</tt>
+<br><tt>{'Bild': ['painting'], 'gewinnen': ['gain']})</tt>
+<p><b>get:</b>
+<br><tt>>>> x.get('car') # No return value, as 'car' is not a key of s</tt>
+<br><tt>>>> x.get('car','key not available')</tt>
+<br><tt>'key not available'</tt>
+<p><tt>>>> x.get('Bild')</tt>
+<br><tt>['picture', 'painting']</tt>
+<p><b>index:</b>
+<br><tt>>>> x.index("Abend")</tt>
+<br><tt>2</tt>
+<p><b>items:</b>
+<br><tt>>>> s.items()</tt>
+<br><tt>[('gewinnen', ['gain']), ('deshalb', ['therefore']), ('Abend',
+['evening']), ('aber', ['but']), ('Bild', ['picture', 'painting']), ('Erkennung',
+['recognition']), ('Fl\366te', ['flute'])]</tt>
+<p><b>has_key:</b>
+<br><tt>>>> x.has_key('car')</tt>
+<br><tt>0</tt>
+<p><tt>>>> x.has_key('Abend')</tt>
+<br><tt>1</tt>
+<p><b>keys:</b>
+<p><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te']</tt>
+<p><b>len:</b>
+<br><tt>>>> len(x)</tt>
+<br><tt>7</tt>
+<p><b>map:</b>
+<br>The map function considers if the second parameter is:
+<p>1: key and values
+<br>2: key and value #default
+<p><tt>>>> cntval = lambda key,value:(key,len(value))</tt><tt></tt>
+<p><tt>>>> x=seqdict.mseqdict(dict)</tt>
+<br><tt>>>> x["Bild"]="painting"</tt>
+<br><tt>>>> x.map(cntval) # Count all value's characters</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te'],</tt>
+<br><tt>{'gewinnen': [4], 'deshalb': [9], 'Abend': [7], 'aber': [3], 'Bild':
+[7, 8], 'Erkennung': [11], 'Fl\366te': [5]})</tt>
+<p><tt>>>> import operator</tt>
+<br><tt>>>> cntvals = lambda key,values:(key,reduce(operator.add,map(len,values)))</tt>
+<br><tt>>>> x.map(cntvals,1) # Count the sum of all value's characters</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te'],</tt>
+<br><tt>{'gewinnen': [4], 'deshalb': [9], 'Abend': [7], 'aber': [3], 'Bild':
+[15], 'Erkennung': [11], 'Fl\366te': [5]})</tt>
+<p><b>pop:</b>
+<br><b>push:</b>
+<br>You can use the dictionary like a stack
+<br><tt>>>> x.pop()</tt>
+<br><tt>{'Fl\366te': ['flute']}</tt>
+<p><tt>>>> x.push('Auto','car')</tt>
+<br><tt>>>> x.pop('deshalb')</tt>
+<p><tt>{'deshalb': ['therefore']}</tt>
+<p><tt>>>> x</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['gewinnen', 'Abend', 'aber', 'Bild', 'Erkennung', 'Auto'],</tt>
+<br><tt>{'Auto': ['car'], 'gewinnen': ['gain'], 'Abend': ['evening'], 'aber':
+['but'], 'Bild': ['picture', 'painting'], 'Erkennung': ['recognition']})</tt>
+<p><tt>>>> x.pop('Bild','picture') #pop single values</tt>
+<br><tt>{'Bild':'picture'}</tt>
+<p><tt>>>> x['Bild']</tt>
+<br><tt>'painting'</tt>
+<p><tt>>>> x.pop('Bild','painting')</tt>
+<br><tt>{'Bild','painting'}</tt>
+<p><tt>>>> x.has_key('Bild')</tt>
+<br><tt>0</tt>
+<p><b>reduce:</b>
+<br><tt>>>> x=seqdict.mseqdict(dict)</tt>
+<p><tt>>>> x['Bild']='painting'</tt>
+<br><tt>>>> import string</tt>
+<br><tt>>>> g=lambda x,(u,v):('%s%10s : %s\n'%(x,u,string.join(v,', ')))</tt>
+<p><tt>>>> x.reduce(g,'')</tt>
+<br><tt>' gewinnen : gain\012 deshalb : therefore\012 Abend : evening\012
+aber : but\012 Bild : picture, painting\012 Erkennung : recognition\012
+Fl\366te : flute\012'</tt>
+<p><tt>>>> print x.reduce(g,'')[:-1]</tt>
+<br><tt>&nbsp; gewinnen : gain</tt>
+<br><tt>&nbsp;&nbsp; deshalb : therefore</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp; Abend : evening</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; aber : but</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bild : picture, painting</tt>
+<br><tt>&nbsp;Erkennung : recognition</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp; Fl&ouml;te : flute</tt>
+<p><b>remove:</b>
+<br><b>del:</b>
+<br><tt>>>> x=seqdict.mseqdict(dict)</tt>
+<br><tt>>>> x['Bild']='painting'</tt>
+<br><tt>>>> x.remove('deshalb')</tt>
+<br><tt>>>> x.remove('Bild','picture')</tt>
+<br><tt>>>> x.has_key('deshalb')</tt>
+<br><tt>0</tt>
+<p><tt>>>> x['Bild']</tt>
+<br><tt>['painting']</tt>
+<p><tt>>>> del x['Bild'][0]</tt>
+<br><tt>>>> x.has_key('Bild']</tt>
+<br><tt>0</tt>
+<p><tt>>>> del x['aber']</tt>
+<br><tt>>>> x.has_key('aber')</tt>
+<br><tt>0</tt>
+<p><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'Abend', 'Erkennung', 'Fl\366te']</tt><tt></tt>
+<p><tt>>>> del x[1:3]</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'Fl\366te']</tt>
+<p><tt>>>> del x</tt>
+<br><tt>>>> x</tt>
+<br><tt>Traceback (innermost last):</tt>
+<br><tt>File "&lt;stdin>", line 1, in ?</tt>
+<br><tt>NameError: x</tt>
+<p><b>reverse:</b>
+<br><tt>>>> x=seqdict.mseqdict(dict)</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te']</tt>
+<p><tt>>>> x.reverse()</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['Fl\366te', 'Erkennung', 'Bild', 'aber', 'Abend', 'deshalb', 'gewinnen']</tt>
+<p><b>slice: # slicing by key</b>
+<br>Slicing with the "['key1':'key2'] is not possible as python accept
+integer indexes only within this construct. Thus the slice method implements
+this as an ordinary function call. An extension is slicing by step.
+<p><tt>>>> x=seqdict.mseqdict(dict)</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te']</tt>
+<p><tt>>>> x.slice('Bild')</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['Bild'],</tt>
+<br><tt>{'Bild': ['picture']})</tt>
+<p><tt>>>> x.slice('deshalb','Erkennung')</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['deshalb', 'Abend', 'aber', 'Bild'],</tt>
+<br><tt>{'Abend': ['evening'], 'aber': ['but'], 'Bild': ['picture'], 'deshalb':
+['therefore']})</tt>
+<p><tt>>>> x.slice('deshalb','Erkennung',2)</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['deshalb', 'aber'],</tt>
+<br><tt>{'aber': ['but'], 'deshalb': ['therefore']})</tt>
+<p><b>sort:</b>
+<br>The sort method allows sorting of keys and/or values
+<br><tt>>>> x=seqdict.mseqdict(dict)</tt>
+<br><tt>>>> x['Bild']='painting'</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te']</tt>
+<p><tt>>>> x.sort() #ASCII-Sort</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['Abend', 'Bild', 'Erkennung', 'Fl\366te', 'aber', 'deshalb', 'gewinnen']</tt>
+<p><tt>>>> sort=lambda x,y:cmp(string.lower(x),string.lower(y))</tt>
+<br><tt>>>> x.sort(sort) #only the keys will be sorted</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['Abend', 'aber', 'Bild', 'deshalb', 'Erkennung', 'Fl\366te', 'gewinnen']</tt>
+<p><tt>>>> x['Bild']</tt>
+<br><tt>['picture', 'painting']</tt>
+<p><tt>>>> x.sort(sort,sort) #2nd function-argument sorts values</tt>
+<br><tt>>>> x['Bild']</tt>
+<br><tt>['painting', 'picture']</tt>
+<p><tt>>>> x=seqdict.mseqdict(dict)</tt>
+<br><tt>>>> x['Bild']='painting'</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te']</tt>
+<p><tt>>>> nosort = lambda x,y:0</tt>
+<br><tt>>>> x.sort(nosort) #use x(nosort,sort) if keys shall not be sorted</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te']</tt>
+<p><b>split:</b>
+<br>The split-method returns a new sequential dictionary (seqdict). It
+expects a function which accepts a key and a value of the dictionary. If
+the function returns a key 'tkey' the dictionary-item is copied into the
+new seqdict (t) as t[tkey][key]=value. For every tkey a seqdict is hold
+as value.
+<p>Following example splits the seqdict u into one seqdict for every lowercase
+beginning letter. The lowercase beginning letter is the key and the splitted
+seqdict is the value for the new seqdict su.
+<p><tt>>>> x=seqdict.mseqdict(dict)</tt>
+<br><tt>>>> x['Bild']='painting'</tt><tt></tt>
+<p><tt>>>> sort=lambda x,y:cmp(string.lower(x),string.lower(y))</tt>
+<br><tt>>>> x.sort(sort,sort)</tt>
+<br><tt>>>> x.keys()</tt>
+<br><tt>['Abend', 'aber', 'Bild', 'deshalb', 'Erkennung', 'Fl\366te', 'gewinnen']</tt>
+<p><tt>>>> xsplit = x.split(lambda i:string.lower(i)[0])</tt>
+<br><tt>>>> xsplit</tt>
+<br><tt>seqdict(</tt>
+<br><tt>['a', 'b', 'd', 'e', 'f', 'g'],</tt>
+<br><tt>{'f': mseqdict(</tt>
+<br><tt>['Fl\366te'],</tt>
+<br><tt>{'Fl\366te': ['flute']}), 'g': mseqdict(</tt>
+<br><tt>['gewinnen'],</tt>
+<br><tt>{'gewinnen': ['gain']}), 'd': mseqdict(</tt>
+<br><tt>['deshalb'],</tt>
+<br><tt>{'deshalb': ['therefore']}), 'e': mseqdict(</tt>
+<br><tt>['Erkennung'],</tt>
+<br><tt>{'Erkennung': ['recognition']}), 'b': mseqdict(</tt>
+<br><tt>['Bild'],</tt>
+<br><tt>{'Bild': ['painting', 'picture']}), 'a': mseqdict(</tt>
+<br><tt>['Abend', 'aber'],</tt>
+<br><tt>{'Abend': ['evening'], 'aber': ['but']})})</tt>
+<p><tt>>>> for tkey in xsplit.keys():</tt>
+<br><tt>...&nbsp;&nbsp; print tkey , xsplit[tkey].keys()</tt>
+<br><tt>...</tt>
+<br><tt>a ['Abend', 'aber']</tt>
+<br><tt>b ['Bild']</tt>
+<br><tt>d ['deshalb']</tt>
+<br><tt>e ['Erkennung']</tt>
+<br><tt>f ['Fl\366te']</tt>
+<br><tt>g ['gewinnen']</tt>
+<p><b>swap:</b>
+<br>This method can only be applied when all values of the dictionary are
+immutable. The Python dictionary cannot hold mutable keys! So swap doesn't
+work if only one of the values has the type list or dictionary. Tuples
+and instances of classes are save as long as they don't emulate lists or
+dictionaries.
+<p><tt>>>> x=seqdict.mseqdict(dict)</tt>
+<br><tt>>>> x['Bild']='painting'</tt>
+<br><tt>>>> x['Ziel']='goal'</tt>
+<br><tt>>>> x['Tor'] ='goal'</tt>
+<br><tt>>>> x # A small German - English dictionary</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te',
+'Ziel', 'Tor'],</tt>
+<br><tt>{'Tor': ['goal'], 'Ziel': ['goal'], 'gewinnen': ['gain'], 'deshalb':
+['therefore'], 'Abend': ['evening'], 'aber': ['but'], 'Bild': ['picture',
+'painting'], 'Erkennung': ['recognition'], 'Fl\366te': ['flute']})</tt>
+<p><tt>>>> x.swap()</tt>
+<br><tt>>>> x # A small English - German dictionary</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['gain', 'therefore', 'evening', 'but', 'picture', 'painting',
+'recognition', 'flute', 'goal'],</tt>
+<br><tt>{'but': ['aber'], 'recognition': ['Erkennung'], 'painting': ['Bild'],
+'flute': ['Fl\366te'], 'gain': ['gewinnen'], 'goal': ['Ziel', 'Tor'], 'evening':
+['Abend'], 'therefore': ['deshalb'], 'picture': ['Bild']})</tt>
+<p><b>operator + :</b>
+<br><tt>>>> x1=x[:3]</tt>
+<br><tt>>>> x1.keys()</tt>
+<br><tt>['Abend', 'aber', 'Bild']</tt><tt></tt>
+<p><tt>>>> x2=x[3:]</tt>
+<br><tt>>>> x2.keys()</tt>
+<br><tt>['deshalb', 'Erkennung', 'Fl\366te', 'gewinnen']</tt>
+<p><tt>>>> x3=x1+x2</tt>
+<br><tt>>>> x3==x</tt>
+<br>1
+<p><b>operator %:</b>
+<br><tt>>>> print """'Bild' is the German word for %(Bild)s and</tt>
+<br><tt>... 'Fl&ouml;te' is %(Fl&ouml;te)s in English"""%x</tt>
+<br><tt>'Bild' is the German word for ['painting', 'picture'] and</tt>
+<br><tt>'Fl&ouml;te' is ['flute'] in English</tt>
+<h2>
+Initialising the dictionary:</h2>
+<font size=+1>The mseqdict dictionary can be initialised with Python dictionary
+or Python dictionary emulations.</font>
+<br>An empty mseqdict:
+<br><tt>>>> seqdict.mseqdict()</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>[],</tt>
+<br><tt>{})</tt>
+<p>4 ways to initialize the seqdict, the values can be seqdict or mseqdict
+values:
+<br><tt>>>> d1=seqdict.mseqdict(dict.keys(),dict.values())</tt>
+<br><tt>>>> d2=seqdict.mseqdict(dict.keys(),dict)</tt>
+<br><tt>>>> d3=seqdict.mseqdict(dict)</tt><tt></tt>
+<p><tt>>>> seqdict.mseqdict(dict)</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung', 'Fl\366te'],</tt>
+<br><tt>{'gewinnen': ['gain'], 'deshalb': ['therefore'], 'Abend': ['evening'],
+'aber': ['but'], 'Bild': ['picture'], 'Erkennung': ['recognition'], 'Fl\366te':
+['flute']})</tt>
+<p><tt>>>> #Now, copy back the textual representation:</tt>
+<br><tt>>>> d4=seqdict.mseqdict(</tt>
+<br><tt>... ['gewinnen', 'deshalb', 'Abend', 'aber', 'Bild', 'Erkennung',
+'Fl\366te'],</tt>
+<br><tt>... {'gewinnen': ['gain'], 'deshalb': ['therefore'], 'Abend': ['evening'],
+'aber': ['but'], 'Bild': ['picture'], 'Erkennung': ['recognition'], 'Fl\366te':
+['flute']})</tt>
+<p><tt>>>> d1==d2==d3==d4</tt>
+<br><tt>1</tt>
+<p><b><font size=+1>Caution:</font></b>
+<br>Don't initialise with a seqdict instance when one or more values of
+the seqdict instance meet following condition:
+<br><tt>type(value) == type([])</tt><tt></tt>
+<p><b>Example:</b>
+<br><tt>>>> e=seqdict.mseqdict({'example':[]})</tt>
+<br><tt>>>> e</tt>
+<br><tt>seqdict(</tt>
+<br><tt>['example'],</tt>
+<br><tt>{'example': [[]]})</tt><tt></tt>
+<p><tt>#don't initialise when one or more value(s) of the seqdict instance
+is a list type or list emulation:</tt>
+<br><tt>>>> seqdict.mseqdict(e) #wrong</tt>
+<br><tt>Traceback (innermost last):</tt>
+<br><tt>File "&lt;stdin>", line 1, in ?</tt>
+<br><tt>File "seqdict/py", line 35, in __init__</tt>
+<br><tt>for key,value in List:</tt>
+<br><tt>File "ndict/py", line 57, in __getitem__</tt>
+<br><tt>&nbsp; return self.dict[key]</tt>
+<br><tt>KeyError: 0</tt>
+<p><tt>>>> seqdict.mseqdict(e.items()) #right, initialise with items instead</tt>
+<br><tt>mseqdict(</tt>
+<br><tt>['example'],</tt>
+<br><tt>{'example': [[]]})</tt>
+<h2>
+Things which will not work:</h2>
+
+<table WIDTH="100%" >
+<tr>
+<td>doesn't work:</td>
+
+<td>use:</td>
+</tr>
+
+<tr>
+<td><tt>for key in x:</tt></td>
+
+<td><tt>for key in x.keys():</tt></td>
+</tr>
+
+<tr>
+<td><tt>key in x:</tt></td>
+
+<td><tt>key in x.keys():</tt></td>
+</tr>
+</table>
+
+</body>
+</html>
