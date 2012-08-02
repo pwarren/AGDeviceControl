@@ -1,11 +1,21 @@
+AGDeviceControl is a cross-platform extensible Python framework enabling the remote manipulation of typical Access Grid hardware resources.
 
+AGDeviceControl allows, for example, a remote operator to switch-on projectors, position cameras and otherwise control any device configured into the system.
+AGDeviceControl was first highlighted at the AG-Retreat 2005 and it.s assocated presentation can be found at http://www-unix.mcs.anl.gov/fl/flevents/ag/agr05/talks/agr05_edmundson_T_remote.pdf
+ 
+AGDeviceControl is no longer being developed, through the original developers were:
+Darran Edmundson and Paul Warren
+From - ANU Supercomputer Facility
+The Australian National University
+ 
+Please note that this code was developed for AGTK 2 and will most likely require modifications to work under AGTK 3!
+ 
+A SVN dump can be downloaded from www.accessgrid.org/files/AGDeviceControl.dump.bz2 (12mb) and a tarball can be found at www.accessgrid.org/files/AGDeviceControl.tar.bz2 (25mb)
 
 For installation, configuration, trouble-shooting and bug reports,
 please see the project page on the Access Grid community portal.
 
-http://trac.agcentral.org/AGDeviceControl/wiki
-
-
+HTTP://LINK NO LONGER VALID
 
 -----------------------------------------------------------------
 
